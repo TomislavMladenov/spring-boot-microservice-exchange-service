@@ -1,11 +1,23 @@
 package com.openpayd.exchange.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "exchange_rate")
 public class ExchangeRate {
@@ -16,52 +28,14 @@ public class ExchangeRate {
     private Long id;
 
     @NotNull(message = "Exchange rate can not be null")
-    @Column(name="currency_from")
+    @Column(name = "currency_from")
     private String from;
 
     @NotNull(message = "Exchange rate can not be null")
-    @Column(name="currency_to")
+    @Column(name = "currency_to")
     private String to;
 
-    @Column(name="rate")
+    @Column(name = "rate")
     private BigDecimal rate;
 
-    public ExchangeRate(Long id, @NotNull(message = "Exchange rate can not be null") String from, @NotNull(message = "Exchange rate can not be null") String to, BigDecimal rate) {
-        this.id = id;
-        this.from = from;
-        this.to = to;
-        this.rate = rate;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getFrom() {
-        return from;
-    }
-
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
-    public String getTo() {
-        return to;
-    }
-
-    public void setTo(String to) {
-        this.to = to;
-    }
-
-    public BigDecimal getRate() {
-        return rate;
-    }
-
-    public void setRate(BigDecimal rate) {
-        this.rate = rate;
-    }
 }
