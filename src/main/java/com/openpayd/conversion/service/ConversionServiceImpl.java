@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.Map;
+
 @Service
 @AllArgsConstructor
 @Slf4j
@@ -20,8 +22,8 @@ public class ConversionServiceImpl implements ConversionService {
     public Conversion makeTransaction(Float sourceAmount, String sourceCurrency, String targetCurrency) {
         String conversionUri = buildConversionUrl(sourceAmount, sourceCurrency, targetCurrency);
         log.info("Conversion uri = {}", conversionUri);
-//        Map response = rest.getForObject(conversionUri, Map.class);
-//        Log.debug("Getting value for conversion", "Test");
+        Map<?, ?> response = rest.getForObject(conversionUri, Map.class);
+        log.debug("Getting value for conversion {}", response);
         return null;
     }
 
