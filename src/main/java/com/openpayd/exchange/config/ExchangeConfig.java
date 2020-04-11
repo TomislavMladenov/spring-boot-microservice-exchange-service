@@ -13,7 +13,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @NoArgsConstructor
 public class ExchangeConfig {
 
+    private String protocol;
     private String accessKey;
-    private String baseUrl;
+    private String host;
     private String liveEndpoint;
 }

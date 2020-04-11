@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.Map;
 import java.util.Optional;
 
@@ -21,9 +22,9 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
     @Override
     public String getExchangeRate(String from, String to) {
         String quoteKey = from + to;
-        String exchangeUri = buildExchangeUrl(quoteKey);
-        System.out.println(exchangeUri);
-        Map response = rest.getForObject(exchangeUri, Map.class);
+        URI exchangeUri = buildExchangeUrl(quoteKey);
+        log.debug("Exchange uri = {}", exchangeUri);
+        Map<String, Object> response = rest.getForObject(exchangeUri, Map.class);
         log.debug("Getting exchange value for quote key {}", quoteKey);
         return getQuote(response, quoteKey)
                 .orElseThrow(() -> createQuoteNotFound(quoteKey));
@@ -32,21 +33,23 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
     private CommonException createQuoteNotFound(String quoteKey){
         log.error("No quote value found for key {}", quoteKey);
         return new QuoteNotFound(
-                "Currency pair not found! Please try with other available currency.",
+                "Currency pair "+quoteKey + " not found! Please try with other available currency.",
                 quoteKey);
     }
 
     private Optional<String> getQuote(Map response, String quoteKey) {
         Map<String, String> quote = (Map<String, String>) response.get("quotes");
-        return Optional.ofNullable(quote.get(quoteKey));
+        log.debug("Found quotes {}", quote);
+        return Optional.ofNullable(String.valueOf(quote.get(quoteKey)));
     }
 
-    private String buildExchangeUrl(String quoteKey) {
+    private URI buildExchangeUrl(String quoteKey) {
         return UriComponentsBuilder.newInstance()
-                    .host(config.getBaseUrl())
+                    .scheme(config.getProtocol())
+                    .host(config.getHost())
                     .path(config.getLiveEndpoint())
                     .queryParam("access_key", config.getAccessKey())
-                    .query(quoteKey).build().toUriString();
+                    .query(quoteKey).build().toUri();
 
     }
 

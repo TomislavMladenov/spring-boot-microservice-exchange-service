@@ -9,10 +9,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @ComponentScan(basePackages = {
-        "com.openpayd.exchange.service", "com.openpayd.exchange.api"
+        "com.openpayd.exchange.service",
+        "com.openpayd.exchange.api.**",
 })
 @EntityScan(basePackages = "com.openpayd.exchange.model")
 @EnableConfigurationProperties(ExchangeConfig.class)
@@ -22,11 +24,6 @@ public class ExchangeConfiguration {
     public ExchangeRateService exchangeRateService(
             ExchangeConfig config, RestTemplate rest){
         return new ExchangeRateServiceImpl(config, rest);
-    }
-
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
     }
 
 }

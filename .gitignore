@@ -33,3 +33,5 @@ build/
 .mvn
 .mvnw
 mvnw.cmd
+src/main/java/com/openpayd/exchange/persistence/
+src/test/
