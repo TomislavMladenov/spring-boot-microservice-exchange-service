@@ -22,6 +22,7 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
     public String getExchangeRate(String from, String to) {
         String quoteKey = from + to;
         String exchangeUri = buildExchangeUrl(quoteKey);
+        System.out.println(exchangeUri);
         Map response = rest.getForObject(exchangeUri, Map.class);
         log.debug("Getting exchange value for quote key {}", quoteKey);
         return getQuote(response, quoteKey)
@@ -46,5 +47,8 @@ public class ExchangeRateServiceImpl implements ExchangeRateService {
                     .path(config.getLiveEndpoint())
                     .queryParam("access_key", config.getAccessKey())
                     .query(quoteKey).build().toUriString();
+
     }
+
+
 }

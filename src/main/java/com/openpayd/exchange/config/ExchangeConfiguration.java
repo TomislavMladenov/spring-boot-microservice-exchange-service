@@ -14,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
 @ComponentScan(basePackages = {
         "com.openpayd.exchange.service", "com.openpayd.exchange.api"
 })
-@EnableJpaRepositories(basePackages = "com.openpayd.exchange.persistence")
 @EntityScan(basePackages = "com.openpayd.exchange.model")
 @EnableConfigurationProperties(ExchangeConfig.class)
 public class ExchangeConfiguration {
@@ -23,6 +22,11 @@ public class ExchangeConfiguration {
     public ExchangeRateService exchangeRateService(
             ExchangeConfig config, RestTemplate rest){
         return new ExchangeRateServiceImpl(config, rest);
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
 }

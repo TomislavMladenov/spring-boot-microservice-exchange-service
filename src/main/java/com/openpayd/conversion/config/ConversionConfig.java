@@ -1,4 +1,4 @@
-package com.openpayd.exchange.config;
+package com.openpayd.conversion.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ExchangeConfig {
+public class ConversionConfig {
 
     private String accessKey;
     private String baseUrl;
